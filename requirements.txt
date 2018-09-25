@@ -5,3 +5,4 @@ pyshp
 scikit-learn
 pandas
 scipy
+spectral
