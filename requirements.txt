@@ -6,3 +6,4 @@ scikit-learn
 pandas
 scipy
 spectral
+scikit-image
