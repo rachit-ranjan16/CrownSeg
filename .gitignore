@@ -106,3 +106,31 @@ venv.bak/
 # vagrant files 
 .vagrant
 ubuntu-*
+
+# Data files 
+*.xml
+*.dbf
+*.tif
+*.tfw
+*.mat
+*.tfw
+*.csv
+*.tif 
+*.shx 
+*.prj 
+*.shp 
+*_README.txt
+*Icon*
+*DS_Store*
+*pointCloud*
+*ITC*
+*GroundData*
+*chm* 
+*Task*
+*RSData*
+README.txt
+*png
+
+
+# vscode files 
+settings.json 
