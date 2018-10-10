@@ -10,7 +10,8 @@ from shutil import rmtree
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(lineno)d:%(message)s')
 log = logging.getLogger(__file__)
 
-INPUT_DATA_FOLDER_PATH = abspath(join(__file__, "../..")) + sep + 'ECODSEdataset' + sep + 'ECODSEdataset' + sep + 'RSdata' + sep
+INPUT_DATA_FOLDER_PATH = dirname(dirname(abspath(
+    __file__))) + sep + 'ECODSEdataset' + sep + 'ECODSEdataset' + sep + 'RSdata' + sep
 
 HYPER_FOLDER_PATH = INPUT_DATA_FOLDER_PATH + 'hs' + sep
 RGB_FOLDER_PATH = INPUT_DATA_FOLDER_PATH + 'camera' + sep
@@ -39,7 +40,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser() 
     parser.add_argument('--file-type', default='hyper', dest='file_type', choices=['rgb','hyper','lidar'], help="rgb, hyper or lidar")
     args = parser.parse_args()
-    print (args.file_type)
     log.info('Starting Execution')
     if args.file_type == 'hyper':
         # Read HyperImage filenames 
