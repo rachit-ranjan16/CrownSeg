@@ -1,9 +1,12 @@
 jupyter
 matplotlib
 numpy
+pandas
 pyshp
 scikit-learn
-pandas
 scipy
 spectral
 scikit-image
+git+git://github.com/sevamoo/SOMPY.git
+opencv_python
+scikit-fuzzy

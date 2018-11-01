@@ -46,19 +46,20 @@ if __name__ == "__main__":
     log.info('Starting Execution')
     parser = get_configured_parser()
     args = parser.parse_args()
-
+    
     if args.file_type == 'hyper':
         # Read HyperImage filenames
-        input_files = get_file_names(HYPER_FOLDER_PATH)
-        source_path = HYPER_FOLDER_PATH
+        source_path = DATASET_PATH + 'hs' + sep
+        input_files = get_file_names(source_path)
+        
     elif args.file_type == 'lidar':
         # Read LIDAR filenames
-        input_files = get_file_names(LIDAR_FOLDER_PATH)
-        source_path = LIDAR_FOLDER_PATH
+        source_path = DATASET_PATH + 'chm' + sep
+        input_files = get_file_names(source_path)
     else:
         # Read RGB filenames
-        input_files = get_file_names(RGB_FOLDER_PATH)
-        source_path = RGB_FOLDER_PATH
+        source_path = DATASET_PATH + 'rgb' + sep
+        input_files = get_file_names(source_path)
 
     log.info('Deleting Output Directory Contents if any exist recursively')
     try:

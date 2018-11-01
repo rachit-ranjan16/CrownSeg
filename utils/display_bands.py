@@ -12,7 +12,10 @@ from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_FOLDER_PATH
 
 
 def plot_bands(wavelengths, intensities):
+    plt.style.use('ggplot')
     f, ax = plt.subplots(1, 1)
+    ax.set_xlabel('Wavelength(nm)')
+    ax.set_ylabel('Intensity')
     ax.plot(wavelengths, intensities)
     plt.show()
 
@@ -35,7 +38,7 @@ def get_configured_parser():
                         help='Y coordinate less than 80')
     parser.add_argument('--trim-image', default=False, dest='trim_image',
                         help='Set to True if noisy bands need to be removed both from wavelengths and hyperspectral images')
-    parser.add_argument('--trim-wavelengths', default=False, dest='trim_w',
+    parser.add_argument('--trim-wavelengths', default=True, dest='trim_w',
                         help='Set to True if noisy bands need to be removed from wavelengths alone')
     return parser
 
@@ -47,6 +50,7 @@ if __name__ == '__main__':
     args.y = int(args.y)
     args.trim_image = bool(args.trim_image)
     args.trim_w = bool(args.trim_w)
+    args.img_id = int(args.img_id)
 
     try:
         hyper_files = sorted([hyper_file for hyper_file in
