@@ -8,7 +8,7 @@ import numpy
 from scipy.io import savemat
 
 import gdal
-from datapaths import DATASET_PATH, HYPER_FOLDER_PATH, LIDAR_FOLDER_PATH, RGB_FOLDER_PATH
+from datapaths import DATASET_PATH
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(lineno)d:%(message)s')
@@ -46,12 +46,12 @@ if __name__ == "__main__":
     log.info('Starting Execution')
     parser = get_configured_parser()
     args = parser.parse_args()
-    
+
     if args.file_type == 'hyper':
         # Read HyperImage filenames
         source_path = DATASET_PATH + 'hs' + sep
         input_files = get_file_names(source_path)
-        
+
     elif args.file_type == 'lidar':
         # Read LIDAR filenames
         source_path = DATASET_PATH + 'chm' + sep
