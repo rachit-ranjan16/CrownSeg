@@ -1,14 +1,15 @@
-import argparse
 from os import listdir
 from os.path import isfile, join
+from scipy.io import loadmat
+from configparser import ConfigParser
 
+import argparse
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from scipy.io import loadmat
 
-from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_FOLDER_PATH
+from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_FOLDER_PATH, CONFIG_FILE
 
 
 def plot_bands(wavelengths, intensities):
@@ -25,7 +26,7 @@ def trim_bands(source_list, flags):
     for i in range(len(flags)):
         if flags[i] == 0:
             trimmed.append(source_list[i])
-    return trimmed
+    return trimmed[:len(trimmed) - int(config['RED_DIM']['CLEAR_END_BANDS'])]
 
 
 def get_configured_parser():
@@ -43,14 +44,21 @@ def get_configured_parser():
     return parser
 
 
-if __name__ == '__main__':
-    parser = get_configured_parser()
+
+def get_parsed_args():
     args = parser.parse_args()
     args.x = int(args.x)
     args.y = int(args.y)
     args.trim_image = bool(args.trim_image)
     args.trim_w = bool(args.trim_w)
     args.img_id = int(args.img_id)
+    return args
+
+if __name__ == '__main__':
+    parser = get_configured_parser()
+    args = get_parsed_args()
+    config = ConfigParser()
+    config.read(CONFIG_FILE)
 
     try:
         hyper_files = sorted([hyper_file for hyper_file in
