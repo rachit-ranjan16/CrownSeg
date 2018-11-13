@@ -32,13 +32,11 @@ def smoothen_hyper_image(image):
     pos = int(config['RED_DIM']['SMOOTH_START_POS'])
     conv_size = int(config['RED_DIM']['CONV_SIZE'])
     upper_limit=image[0][0].shape[0] - int(config['RED_DIM']['CLEAR_END_BANDS'])
-    new_image = np.array([[[None for x in range(upper_limit)] for x in range(image.shape[0])]for y in range(image.shape[1])])
-
     for i in range(image.shape[0]):
         for j in range(image.shape[1]):
-            new_image[i][j] = np.append(
-                image[i][j][:pos], smoothen(image[i][j][pos:], conv_size))[:upper_limit]
-    return new_image 
+            image[i][j] = np.append(
+                image[i][j][:pos], smoothen(image[i][j][pos:], conv_size))
+    return image[:,:,:upper_limit]
 
     
 def smoothen_hyper_images():
