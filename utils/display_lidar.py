@@ -14,8 +14,8 @@ if __name__ == '__main__':
     args.pc_id = args.pc_id if len(args.pc_id) == 2 else '0' + args.pc_id
 
     image = loadmat(LIDAR_FILE + args.pc_id + '_chm.mat')['image']
-    plt.imshow(image, cmap=cm.get_cmap('afmhot', 4),
-               vmin=0, vmax=1, origin='lower')
-    plt.title("LiDAR Heat Map")
-    plt.colorbar(ticks=np.linspace(0, 1, 5))
+    # print(image, image.min(), image.max())
+    plt.imshow(image, cmap=cm.get_cmap('afmhot', 4), origin='lower')
+    plt.title("LiDAR Canopy Height Model Map Res 1m2")
+    plt.colorbar(ticks=np.linspace(image.min(), image.max(), 5))
     plt.show()

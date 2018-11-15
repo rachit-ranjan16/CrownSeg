@@ -28,8 +28,11 @@ def cast_to_mat(input_files, source_path, dest_path):
         # Read GeoTIFF Hyperspectral Image Files
         image = gdal.Open(
             source_path + f).ReadAsArray().T
-        # Normalize
-        image /= image.max()
+        # TODO Check whether gDAL Open is returning other information that might be useful. 
+        # Check this and hyperspectral image for any coordinates that might help in conversion. 
+        # Normalize if not LiDAR CHM
+        if args.file_type != 'lidar':
+            image /= image.max()
         # Write as .mat file
         savemat(dest_path + f.split('.')
                 [0] + '.mat', {'image': image})
