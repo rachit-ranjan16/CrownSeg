@@ -15,7 +15,7 @@ from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_FOLDER_PATH, CONFIG_
 def plot_bands(wavelengths, intensities):
     plt.style.use('ggplot')
     f, ax = plt.subplots(1, 1)
-    ax.set_xlabel('Wavelength(nm)')
+    ax.set_xlabel('Band Nanometers')
     ax.set_ylabel('Intensity')
     ax.plot(wavelengths, intensities)
     plt.show()

@@ -1,9 +1,9 @@
-import argparse
 from os import listdir
 from os.path import isfile, join
 from scipy.io import loadmat, savemat
 from configparser import ConfigParser
 
+import argparse
 import matplotlib.cm as cm
 import matplotlib.pyplot as plt
 import numpy as np
