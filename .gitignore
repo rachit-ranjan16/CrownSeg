@@ -134,6 +134,7 @@ README.txt
 *png
 *tiff
 *img
+*.db
 
 # vscode files 
 settings.json 

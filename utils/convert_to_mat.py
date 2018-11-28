@@ -1,25 +1,19 @@
-import argparse
-import logging
 from os import listdir, mkdir, rmdir, sep
 from os.path import abspath, dirname, isfile, join
 from shutil import rmtree
-
-import numpy
 from scipy.io import savemat
 
+import numpy
+import argparse
+import logging
 import gdal
-from datapaths import DATASET_PATH
+
+from datapaths import DATASET_PATH, HYPER_SOURCE_PATH, LIDAR_SOURCE_PATH, RGB_SOURCE_PATH, NDVI_SOURCE_PATH
+from commons import get_file_names
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(lineno)d:%(message)s')
 log = logging.getLogger(__file__)
-
-# TODO Refactor to commons 
-def get_file_names(source_path):
-    return sorted([f for f in
-                   [f for f in listdir(source_path) if isfile(
-                       join(source_path, f))]
-                   if 'tif' in f and 'aux.xml' not in f])
 
 
 def cast_to_mat(input_files, source_path, dest_path):
@@ -52,20 +46,20 @@ if __name__ == "__main__":
 
     if args.file_type == 'hyper':
         # Read HyperImage filenames
-        source_path = DATASET_PATH + 'hs' + sep
+        source_path = HYPER_SOURCE_PATH
         input_files = get_file_names(source_path)
 
     elif args.file_type == 'lidar':
         # Read LIDAR filenames
-        source_path = DATASET_PATH + 'chm' + sep
+        source_path = LIDAR_SOURCE_PATH
         input_files = get_file_names(source_path)
     elif args.file_type == 'rgb':
         # Read RGB filenames
-        source_path = DATASET_PATH + 'rgb' + sep
+        source_path = RGB_SOURCE_PATH
         input_files = get_file_names(source_path)
     else: 
         # Read NDVI filenames 
-        source_path = DATASET_PATH + 'NDVI' + sep 
+        source_path = NDVI_SOURCE_PATH
         input_files = get_file_names(source_path)
     log.info('Deleting Output Directory Contents if any exist recursively')
 
@@ -74,8 +68,7 @@ if __name__ == "__main__":
         rmtree(source_path + 'MAT')
     except FileNotFoundError as e:
         log.info("Out Directory doesn't exist. Gonna create one.")
-    # Create Output Directory
-    mkdir(source_path + 'MAT')
+    
 
     cast_to_mat(input_files, source_path, source_path + 'MAT' + sep)
     log.info('Execution Complete')
