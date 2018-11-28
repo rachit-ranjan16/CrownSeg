@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_ORIG_PATH, CONFIG_FILE
+from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_ORIG_FOLDER_PATH, CONFIG_FILE
 
 
 def plot_bands(wavelengths, intensities):
@@ -47,12 +47,12 @@ if __name__ == '__main__':
 
     try:
         hyper_files = sorted([hyper_file for hyper_file in
-                              [f for f in listdir(HYPER_ORIG_PATH) if isfile(join(HYPER_ORIG_PATH, f))]])
+                              [f for f in listdir(HYPER_ORIG_FOLDER_PATH) if isfile(join(HYPER_ORIG_FOLDER_PATH, f))]])
         hyper_bands = pd.read_csv(HYPER_BANDS_FILE)
     except FileNotFoundError:
         print(DATASET_PATH)
         print("Failed to find Processed Dataset.\nPlease follow the README instructions to fetch and process the dataset")
-    hyper_image = loadmat(HYPER_ORIG_PATH +
+    hyper_image = loadmat(HYPER_ORIG_FOLDER_PATH +
                               hyper_files[args.img_id])['image']
     wavelengths = hyper_bands['Band_nanometers']
     plot_bands(wavelengths=wavelengths, intensities=hyper_image[args.x][args.y])

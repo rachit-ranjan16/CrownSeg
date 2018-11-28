@@ -18,7 +18,8 @@ Segment Tree Crowns from RGB, Hyperspectral and LiDAR Images using Clustering te
     - Most RGB Images either show a blur or tilt or both along with not matching with their hyperspectral and lidar counterparts 
         - RGB Images Not Used 
     - Higher bands seem to have noisy information attributing to poor sensor calibration
-        - Smoothed out using convolutions
+        - Smoothed out using convolutions 
+        - End noise clipped out
 
 ## Prerequisites 
     TODO Add this along with setup instructions 
@@ -29,12 +30,17 @@ TODO Add relevant code execution lines with each instruction
 - Hyperspectral Image Operations 
     - Remove Noisy Bands 
     - Smooth out intensities in the higher bands for all pixels in all images 
-    - Employ Minimum Noise Fraction Principal Components for Dimensionality Reduction 
-- Use LiDAR Heat Map as a Thresholding filter over hyperspectral Images 
-- Execute Clustering Algorithms on Images(store output labels in .mat files)
+- Execute Clustering Algorithms on Images(store output labels in .mat files) <br/>
+  TODO Zone in on the ones to be used 
     - K Means 
     - Fuzzy C Means 
     - Gaussian Mixture Model 
     - Self Organizing Maps 
     - Hierarchical  
+- Create Normalized Difference Vegetation Index(NDVI) for each hyperspectral image
+    - Ranges from -1(water) to 1(rainforests)
+    - Convert created NDVI from .tif to .mat format
+- Threshold NDVI for Rainforests/Trees to a binary image and use as a mask over LiDAR CHM to further segment LiDAR into tree or no tree - assists in differentiating further between trees and other artifacts
+- Put the composite NDVI + LiDAR CHM as a mask over the cluster labels ensuring everything except crowns is soft thresholded to zero 
+- Convert ShapeFile Training Outputs to Image and then a matrix for comparison with 
 - Compare Output Labels with available shapefile outputs to fine tune clustering algorithms' hyperparameters 
