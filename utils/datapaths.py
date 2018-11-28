@@ -7,6 +7,7 @@ DATASET_PATH = dirname(dirname(abspath(__file__))) + sep + \
 HYPER_SOURCE_PATH = DATASET_PATH + 'hs' + sep
 HYPER_FOLDER_PATH = DATASET_PATH + 'hs' + sep + 'MAT' + sep
 HYPER_ORIG_PATH = DATASET_PATH + 'hs' + sep + 'MAT-Orig' + sep
+NDVI_DEST_PATH = DATASET_PATH + 'NDVI' + sep 
 HYPER_BANDS_FILE = dirname(dirname(abspath(__file__))) + sep + \
     'ECODSEdataset' + sep + 'ECODSEdataset' + sep+'hyper_bands.csv'
 RGB_FOLDER_PATH = DATASET_PATH + 'camera' + sep + 'MAT' + sep

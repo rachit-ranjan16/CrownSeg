@@ -14,7 +14,7 @@ logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(lineno)d:%(message)s')
 log = logging.getLogger(__file__)
 
-
+# TODO Refactor to commons 
 def get_file_names(source_path):
     return sorted([f for f in
                    [f for f in listdir(source_path) if isfile(
@@ -41,7 +41,7 @@ def cast_to_mat(input_files, source_path, dest_path):
 def get_configured_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('--file-type', default='hyper', dest='file_type',
-                        choices=['rgb', 'hyper', 'lidar'], help="rgb, hyper or lidar")
+                        choices=['rgb', 'hyper', 'lidar', 'ndvi'], help="rgb, hyper, lidar or ndvi(needs to be created first using calculate_ndvi.py)")
     return parser
 
 
@@ -59,12 +59,17 @@ if __name__ == "__main__":
         # Read LIDAR filenames
         source_path = DATASET_PATH + 'chm' + sep
         input_files = get_file_names(source_path)
-    else:
+    elif args.file_type == 'rgb':
         # Read RGB filenames
         source_path = DATASET_PATH + 'rgb' + sep
         input_files = get_file_names(source_path)
-
+    else: 
+        # Read NDVI filenames 
+        source_path = DATASET_PATH + 'NDVI' + sep 
+        input_files = get_file_names(source_path)
     log.info('Deleting Output Directory Contents if any exist recursively')
+
+    #TODO Refactor to commons 
     try:
         rmtree(source_path + 'MAT')
     except FileNotFoundError as e:
