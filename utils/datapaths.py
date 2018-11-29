@@ -2,6 +2,8 @@ from os import sep
 from os.path import abspath, dirname
 
 CONFIG_FILE = dirname(dirname(abspath(__file__))) + sep + 'appConfig.ini'
+MISSING_MASKS = dirname(
+    dirname(abspath(__file__))) + sep + 'missing_masks.txt'
 DATASET_PATH = dirname(dirname(abspath(__file__))) + sep + \
     'ECODSEdataset' + sep + 'ECODSEdataset' + sep + 'RSdata' + sep
 HYPER_SOURCE_PATH = DATASET_PATH + 'hs' + sep

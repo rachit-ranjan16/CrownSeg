@@ -61,14 +61,14 @@ if __name__ == "__main__":
         # Read NDVI filenames 
         source_path = NDVI_SOURCE_PATH
         input_files = get_file_names(source_path)
-    log.info('Deleting Output Directory Contents if any exist recursively')
+    log.info('Deleting Output Directory Tree if any exists recursively')
 
     #TODO Refactor to commons 
     try:
         rmtree(source_path + 'MAT')
     except FileNotFoundError as e:
-        log.info("Out Directory doesn't exist. Gonna create one.")
-    
+        log.info("Out Directory doesn't exist")
+    mkdir(source_path + 'MAT')
 
     cast_to_mat(input_files, source_path, source_path + 'MAT' + sep)
     log.info('Execution Complete')

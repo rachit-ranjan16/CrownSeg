@@ -138,3 +138,7 @@ README.txt
 
 # vscode files 
 settings.json 
+
+# other files 
+test.txt 
+missing* 
