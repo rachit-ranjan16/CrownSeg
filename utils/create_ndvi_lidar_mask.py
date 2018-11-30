@@ -1,6 +1,7 @@
 from os import mkdir
 from shutil import rmtree
 from scipy.io import loadmat, savemat
+from scipy.ndimage import median_filter
 from configparser import ConfigParser
 
 import cv2
@@ -8,7 +9,7 @@ import logging
 
 from datapaths import DATASET_PATH, NDVI_FOLDER_PATH, LIDAR_FOLDER_PATH, CONFIG_FILE, NDVI_LIDAR_SOURCE_PATH, NDVI_LIDAR_FOLDER_PATH
 
-from commons import get_mat_file_names, put_missing_mask_indices
+from commons import get_mat_file_names, clean_create
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(lineno)d:%(message)s')
@@ -20,7 +21,7 @@ def generate_lidar_ndvi_mask(lidar, ndvi):
     ndvi[ndvi < threshold] = 0
     ndvi[ndvi > threshold] = 1
 
-    return cv2.bitwise_and(src1=lidar.astype(int), src2=ndvi.astype(int))
+    return median_filter(cv2.bitwise_and(src1=lidar.astype(int), src2=ndvi.astype(int)), size=int(config['MEDIAN_FILTER']['WINDOW_SIZE']))
 
 
 if __name__ == '__main__':
@@ -30,38 +31,27 @@ if __name__ == '__main__':
     lidar_files = get_mat_file_names(LIDAR_FOLDER_PATH)
     ndvi_files = get_mat_file_names(NDVI_FOLDER_PATH)
 
-    try: 
-        # Create Output Directory 
+    try:
+        # Create Output Directory
         mkdir(NDVI_LIDAR_SOURCE_PATH[:-1])
     except FileExistsError:
-        log.debug('Output Directory Exists.') 
+        log.debug('Output Directory Exists.')
 
-    # TODO Refactor to commons
-    log.debug('Deleting Output Directory Contents if any exists recursively')
-    try:
-        rmtree(NDVI_LIDAR_FOLDER_PATH[:-1])
-    except FileNotFoundError as e:
-        log.info("Out subdirectory doesn't exist. Gonna create one.")
-    # Create Output Subirectory
-    mkdir(NDVI_LIDAR_FOLDER_PATH[:-1])
-    missing_masks = []
+    clean_create(NDVI_LIDAR_FOLDER_PATH[:-1])
+
     for i in range(len(lidar_files)):
-        
-        log.debug('Tackling LidarFile=%r NdviFile=%r', lidar_files[i], ndvi_files[i])
+
+        log.debug('Tackling LidarFile=%r NdviFile=%r',
+                  lidar_files[i], ndvi_files[i])
         lidar = loadmat(LIDAR_FOLDER_PATH + lidar_files[i])['image']
         ndvi = loadmat(NDVI_FOLDER_PATH + ndvi_files[i])['image']
         if lidar.shape != ndvi.shape:
             log.warning('Corrupted %s or %s. Skipping the pair',
                         lidar_files[i], ndvi_files[i])
-            missing_masks.append(lidar_files[i].split('_')[1])
             continue
         lidar_ndvi = generate_lidar_ndvi_mask(lidar, ndvi)
         f = lidar_files[i]
         savemat(NDVI_LIDAR_FOLDER_PATH +
                 f[:f[::-1].find('_') + 2] + 'ndvi_lidar.mat', {'image': lidar_ndvi})
-    if missing_masks:
-        log.warning('Writing out corrupt image numbers')
-        put_missing_mask_indices(missing_masks)
 
     log.info('Execution Complete')
-

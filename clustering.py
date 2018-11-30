@@ -116,44 +116,43 @@ def SOM(inp_image, n_clusters=int(config['SOM']['N_CLUSTERS']), n_job=int(config
 if __name__ == "__main__":
 
     algorithms = config['CLUSTERING']['ALGORITHMS'].split(',')
-
-    clean_create(OUT_PATH[:-1])
+    # Uncomment to clean out all outputs 
+    # clean_create(OUT_PATH[:-1])
     for algo in algorithms:
         log.info('Algorithm=%s', algo)
         if algo == 'KMeans':
             log.info('KMeans Clustering')
             clean_create(KMEANS_FOLDER_PATH[:-1])
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
-                log.debug('Tacking File=%s', hyper_file)
+                log.debug('Tackling File=%s', hyper_file)
                 savemat(KMEANS_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': k_means_clustering(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
-                exit(123)
         elif algo == 'FCM':
             clean_create(FCM_FOLDER_PATH[:-1])
             log.info('FCM Clustering')
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
-                log.debug('Tacking File=%s', hyper_file)
+                log.debug('Tackling File=%s', hyper_file)
                 savemat(FCM_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': fuzzy_c_means(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
         elif algo == 'SOM':
             clean_create(SOM_FOLDER_PATH[:-1])
             log.info('Self Organizing Map Clustering')
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
-                log.debug('Tacking File=%s', hyper_file)
+                log.debug('Tackling File=%s', hyper_file)
                 savemat(SOM_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': SOM(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
         elif algo == 'GMM':
             clean_create(GMM_FOLDER_PATH[:-1])
             log.info('Gaussian Mixture Model Clustering')
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
-                log.debug('Tacking File=%s', hyper_file)
+                log.debug('Tackling File=%s', hyper_file)
                 savemat(GMM_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': gaussian_mixture_model(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
         elif algo == 'Spectral':
             clean_create(SPECTRAL_FOLDER_PATH[:-1])
             log.info('Spectral Clustering')
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
-                log.debug('Tacking File=%s', hyper_file)
+                log.debug('Tackling File=%s', hyper_file)
                 savemat(SPECTRAL_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': spectral_cluster(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
     log.info('Execution Complete')

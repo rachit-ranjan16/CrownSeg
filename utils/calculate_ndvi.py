@@ -13,7 +13,7 @@ import argparse
 import logging
 
 from datapaths import DATASET_PATH, HYPER_BANDS_FILE, HYPER_SOURCE_PATH, CONFIG_FILE, NDVI_SOURCE_PATH
-from commons import get_file_names
+from commons import get_file_names, clean_create
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s:%(levelname)s:%(lineno)d:%(message)s')
@@ -122,13 +122,7 @@ if __name__ == '__main__':
         exit(123)
 
     log.info('Deleting Output Directory Contents if any exists recursively')
-    # TODO Refactor to commons
-    try:
-        rmtree(DATASET_PATH + 'ndvi')
-    except FileNotFoundError as e:
-        log.info("Out Directory doesn't exist. Gonna create one.")
-    # Create Output Directory
-    mkdir(DATASET_PATH + 'ndvi')
+    clean_create(DATASET_PATH + 'ndvi')
 
     log.info('Processing HyperFiles to figure out corresponding NDVI')
     for hyper_file in hyper_files:
