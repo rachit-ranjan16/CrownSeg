@@ -36,7 +36,9 @@ The code expects Dataset to be extracted as `~/ECODSEdataset/ECODSEdataset/`
     - Ubuntu 18.04 LTS Recommended
         - Default Python3 installation  
         - Pip3 Installation
-            - `sudo apt-get -y -q install python3-pip`
+            - ```console 
+               sudo apt-get -y -q install python3-pip
+               ```
     - GDAL Installation(Ubuntu instructions only)
         - `sudo apt-get -y -q install gdal-bin`
         - `sudo apt-get -y -q install python3-numpy`
