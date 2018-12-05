@@ -73,12 +73,12 @@ All Outputs are stored in `~/OUT/` following a similar filename pattern structur
 - [x] View Images 
   - Hyperspectral Image Bands 
     - `python3 utils/display_bands --help`
-        - `python3 utils/display_bands --image-id=23 -x=40 -y=25`
+      - `python3 utils/display_bands --image-id=23 -x=40 -y=25`
     - Add `--trim-wavelengths=False` until noisy bands have been purged from the hyperspectral images(executed in the following instruction)
 - [x] Hyperspectral Image Dimensionality Reduction
   - Purge Noisy Bands and Smooth out intensities in the higher bands for all pixels in all images
     - `python3 utils/reduce_dimensionality.py --help`
-        - `python3 utils/reduce_dimensionality.py`
+      - `python3 utils/reduce_dimensionality.py`
 - [x] Create Normalized Difference Vegetation Index(NDVI) for each hyperspectral image
   - `python3 utils/calculate_ndvi.py`
 - [x] Convert created NDVI from .tif to .mat format

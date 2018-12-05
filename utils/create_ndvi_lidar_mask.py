@@ -19,7 +19,10 @@ log = logging.getLogger(__file__)
 def generate_lidar_ndvi_mask(lidar, ndvi):
     threshold = float(config['NDVI']['THRESHOLD'])
     ndvi[ndvi < threshold] = 0
-    ndvi[ndvi > threshold] = 1
+    ndvi[ndvi >= threshold] = 1
+    lidar_threshold = lidar.max() * float(config['LIDAR']['THRESHOLD'])
+    lidar[lidar < lidar_threshold] = 0
+    lidar[lidar >= lidar_threshold] = 1
 
     return median_filter(cv2.bitwise_and(src1=lidar.astype(int), src2=ndvi.astype(int)), size=int(config['MEDIAN_FILTER']['WINDOW_SIZE']))
 
