@@ -4,7 +4,7 @@ from sklearn.mixture import GaussianMixture
 from skimage.transform import pyramid_expand, pyramid_reduce, resize
 from configparser import ConfigParser
 from scipy.io import savemat, loadmat
-
+from time import time 
 
 
 import skfuzzy as skf
@@ -123,24 +123,33 @@ if __name__ == "__main__":
         if algo == 'KMeans':
             log.info('KMeans Clustering')
             clean_create(KMEANS_FOLDER_PATH[:-1])
+            start = time()
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
                 log.debug('Tackling File=%s', hyper_file)
                 savemat(KMEANS_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': k_means_clustering(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
+            end = time() 
+            log.info("Execution Time=%.3fs", (end - start))
         elif algo == 'FCM':
-            clean_create(FCM_FOLDER_PATH[:-1])
             log.info('FCM Clustering')
+            clean_create(FCM_FOLDER_PATH[:-1])
+            start = time()
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
                 log.debug('Tackling File=%s', hyper_file)
                 savemat(FCM_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': fuzzy_c_means(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
+            end = time()
+            log.info("Execution Time=%.3fs", (end - start))
         elif algo == 'SOM':
-            clean_create(SOM_FOLDER_PATH[:-1])
             log.info('Self Organizing Map Clustering')
+            clean_create(SOM_FOLDER_PATH[:-1])
+            start = time()
             for hyper_file in get_mat_file_names(HYPER_FOLDER_PATH):
                 log.debug('Tackling File=%s', hyper_file)
                 savemat(SOM_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': SOM(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
+            end = time()
+            log.info("Execution Time=%.3fs", (end - start))
         elif algo == 'GMM':
             clean_create(GMM_FOLDER_PATH[:-1])
             log.info('Gaussian Mixture Model Clustering')
@@ -148,6 +157,8 @@ if __name__ == "__main__":
                 log.debug('Tackling File=%s', hyper_file)
                 savemat(GMM_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': gaussian_mixture_model(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
+            end = time()
+            log.info("Execution Time=%.3fs", (end - start))
         elif algo == 'Spectral':
             clean_create(SPECTRAL_FOLDER_PATH[:-1])
             log.info('Spectral Clustering')
@@ -155,4 +166,6 @@ if __name__ == "__main__":
                 log.debug('Tackling File=%s', hyper_file)
                 savemat(SPECTRAL_FOLDER_PATH + 'OUT_' + hyper_file,
                         {'image': spectral_cluster(loadmat(HYPER_FOLDER_PATH + hyper_file)['image'])})
+            end = time()
+            log.info("Execution Time=%.3fs", (end - start))
     log.info('Execution Complete')
