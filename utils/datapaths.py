@@ -3,6 +3,9 @@ from os.path import abspath, dirname
 
 
 CONFIG_FILE = dirname(dirname(abspath(__file__))) + sep + 'appConfig.ini'
+TRAIN_OUT_SHAPES_FOLDER_PATH = dirname(dirname(abspath(__file__))) + sep + \
+    'ECODSEdataset' + sep + 'ECODSEdataset' + sep + 'Task1' + sep + 'ITC' + sep
+
 
 DATASET_PATH = dirname(dirname(abspath(__file__))) + sep + \
     'ECODSEdataset' + sep + 'ECODSEdataset' + sep + 'RSdata' + sep
